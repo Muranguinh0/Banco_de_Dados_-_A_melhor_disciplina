@@ -10,3 +10,6 @@ AND autores.nome = 'J.K. Rowling';
 SELECT alunos.nome FROM alunos
 INNER JOIN matriculas ON alunos.id = matriculas.aluno_id
 AND matriculas.curso = 'Engenharia de Software';
+
+SELECT produto, SUM(receita) 
+AS total FROM vendas GROUP BY produto;
