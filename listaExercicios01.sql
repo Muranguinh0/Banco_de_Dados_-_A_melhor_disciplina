@@ -13,3 +13,8 @@ AND matriculas.curso = 'Engenharia de Software';
 
 SELECT produto, SUM(receita) 
 AS total FROM vendas GROUP BY produto;
+
+SELECT nome, COUNT(*) 
+AS qtd_livros FROM autores 
+INNER JOIN livros ON livros.autor_id = autores.id 
+GROUP BY nome;
