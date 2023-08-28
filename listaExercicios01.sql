@@ -26,3 +26,7 @@ GROUP BY curso;
 
 SELECT produto, AVG(receita) AS receita_media
 FROM vendas GROUP BY produto;
+
+SELECT produto, SUM(receita) AS total
+FROM vendas GROUP BY produto 
+HAVING SUM(receita) > 10000;
