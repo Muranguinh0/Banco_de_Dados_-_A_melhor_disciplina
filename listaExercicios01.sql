@@ -20,6 +20,9 @@ INNER JOIN livros ON livros.autor_id = autores.id
 GROUP BY nome;
 
 SELECT matriculas.curso, COUNT(alunos.id)
-AS total_alunos FROM matriculas 
+AS qtd_alunos FROM matriculas 
 INNER JOIN alunos ON matriculas.aluno_id = alunos.id
 GROUP BY curso;
+
+SELECT produto, AVG(receita) AS receita_media
+FROM vendas GROUP BY produto;
