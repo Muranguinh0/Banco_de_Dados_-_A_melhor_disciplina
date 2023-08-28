@@ -35,3 +35,7 @@ SELECT nome, COUNT(*)
 AS qtd_livros FROM autores
 INNER JOIN livros ON livros.autor_id = autores.id
 GROUP BY nome HAVING COUNT(*) = 2;
+
+SELECT livros.titulo, autores.nome 
+FROM livros LEFT JOIN autores
+ON livros.autor_id = autores.id;
