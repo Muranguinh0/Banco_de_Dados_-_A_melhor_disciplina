@@ -74,3 +74,7 @@ SELECT alunos.nome, COUNT(*) AS qtd_matriculas
 FROM matriculas INNER JOIN alunos 
 ON matriculas.aluno_id = alunos.id 
 GROUP BY nome;
+
+SELECT produto, COUNT(*) AS qtd_receitas
+FROM vendas GROUP BY produto 
+ORDER BY COUNT(*) DESC LIMIT 1;
