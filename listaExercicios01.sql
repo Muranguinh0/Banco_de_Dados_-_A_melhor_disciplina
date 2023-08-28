@@ -30,3 +30,8 @@ FROM vendas GROUP BY produto;
 SELECT produto, SUM(receita) AS total
 FROM vendas GROUP BY produto 
 HAVING SUM(receita) > 10000;
+
+SELECT nome, COUNT(*) 
+AS qtd_livros FROM autores
+INNER JOIN livros ON livros.autor_id = autores.id
+GROUP BY nome HAVING COUNT(*) = 2;
