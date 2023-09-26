@@ -44,3 +44,11 @@ END;
 // DELIMITER ;
 CALL sp_VerificarLivrosCategoria('Romance', @possui_livros);
 SELECT @possui_livros;
+
+DELIMITER // 
+CREATE PROCEDURE sp_LivrosAteAno(data_ano INT)
+BEGIN
+	SELECT Titulo FROM Livro WHERE Ano_Publicacao <= data_ano;
+END;
+// DELIMITER ;
+CALL sp_LivrosAteAno('2000');
