@@ -65,7 +65,7 @@ END;
 CALL sp_TitulosPorCategoria('Autoajuda');
 
 DELIMITER // 
-CREATE PROCEDURE sp_AdicionarLivro(IN nome VARCHAR(255))
+CREATE PROCEDURE sp_AdicionarLivro(IN nome VARCHAR(250))
 BEGIN
 	DECLARE quantidade_livros INT;
     	SELECT COUNT(Titulo) INTO quantidade_livros 
@@ -94,9 +94,9 @@ DELIMITER //
 CREATE PROCEDURE sp_LivrosESeusAutores()
 BEGIN
 	SELECT Livro.Titulo, Autor.Nome, Autor.Sobrenome 
-    FROM Livro INNER JOIN Autor_Livro 
-    INNER JOIN Autor ON Autor_Livro.Autor_ID = Autor.Autor_ID 
-    AND Livro.Livro_ID = Autor_Livro.Livro_ID;
+    	FROM Livro INNER JOIN Autor_Livro 
+    	INNER JOIN Autor ON Autor_Livro.Autor_ID = Autor.Autor_ID 
+   	AND Livro.Livro_ID = Autor_Livro.Livro_ID;
 END;
 // DELIMITER ;
 CALL sp_LivrosESeusAutores();
