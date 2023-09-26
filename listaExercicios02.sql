@@ -89,3 +89,14 @@ END;
 CALL sp_AutorAntigo();
 
 /*No exercício 9, eu expliquei o exercício 1*/
+
+DELIMITER // 
+CREATE PROCEDURE sp_LivrosESeusAutores()
+BEGIN
+	SELECT Livro.Titulo, Autor.Nome, Autor.Sobrenome 
+    FROM Livro INNER JOIN Autor_Livro 
+    INNER JOIN Autor ON Autor_Livro.Autor_ID = Autor.Autor_ID 
+    AND Livro.Livro_ID = Autor_Livro.Livro_ID;
+END;
+// DELIMITER ;
+CALL sp_LivrosESeusAutores();
