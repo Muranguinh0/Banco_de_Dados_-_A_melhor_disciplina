@@ -1,10 +1,10 @@
-DELIMITER // 
-CREATE PROCEDURE sp_ListarAutores()
-BEGIN
-	SELECT Nome FROM Autor;
-END;
-// DELIMITER ;
-CALL sp_ListarAutores();
+DELIMITER // /*Esse Delimiter marca o início do bloco de código da procedure*/
+CREATE PROCEDURE sp_ListarAutores() /*A criação da procedure*/
+BEGIN /*Início da Procedure*/
+	SELECT Nome FROM Autor; /*Seleciona o que a procedure vai consultar*/
+END; /*Fim da Procedure*/
+// DELIMITER ; /*Esse Delimiter marca o fim do bloco de código da procedure*/
+CALL sp_ListarAutores(); /*Chama a procedure*/
 
 DELIMITER //
 CREATE PROCEDURE sp_LivrosPorCategoria(IN categoria_nome VARCHAR(250))
@@ -87,3 +87,5 @@ BEGIN
 END; 
 // DELIMITER ; 
 CALL sp_AutorAntigo();
+
+/*No exercício 9, eu expliquei o exercício 1*/
