@@ -68,7 +68,8 @@ DELIMITER //
 CREATE PROCEDURE sp_AdicionarLivro(IN nome VARCHAR(255))
 BEGIN
 	DECLARE quantidade_livros INT;
-    SELECT COUNT(Titulo) INTO quantidade_livros FROM Livro WHERE nome = Titulo;
+    	SELECT COUNT(Titulo) INTO quantidade_livros 
+	FROM Livro WHERE nome = Titulo;
 	IF quantidade_livros = 0 THEN
 		INSERT INTO Livro (Titulo) VALUES (nome);
 	ELSE
@@ -77,3 +78,12 @@ BEGIN
 END;
 // DELIMITER ;
 CALL sp_AdicionarLivro('Miau');
+
+DELIMITER // 
+CREATE PROCEDURE sp_AutorAntigo()
+BEGIN 
+	SELECT Nome FROM Autor 
+    	ORDER BY Data_Nascimento LIMIT  1;
+END; 
+// DELIMITER ; 
+CALL sp_AutorAntigo();
