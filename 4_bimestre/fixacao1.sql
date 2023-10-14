@@ -54,3 +54,16 @@ SELECT produto,
         ELSE 'Caro'
     END 
     AS categoria FROM produtos;
+
+--Exercício 5--
+DELIMITER //
+CREATE FUNCTION TOTAL_VALOR(preco DECIMAL(12, 5), quantidade INT)
+RETURNS DECIMAL(12, 5) DETERMINISTIC
+BEGIN
+    DECLARE valor_total DECIMAL(12, 5);
+    SET valor_total = preco * quantidade;
+    RETURN valor_total;
+END;
+// DELIMITER ;
+
+SELECT produto, TOTAL_VALOR(preco, quantidade) AS valor_total FROM produtos;
