@@ -67,3 +67,12 @@ END;
 // DELIMITER ;
 
 SELECT produto, TOTAL_VALOR(preco, quantidade) AS valor_total FROM produtos;
+
+--Exercício 6--
+SELECT COUNT(*) AS quantidade_produtos FROM produtos;
+
+SELECT produto, MAX(preco) AS preco_maximo FROM produtos GROUP BY produto;
+
+SELECT produto, MIN(preco) AS preco_minimo FROM produtos GROUP BY produto;
+
+SELECT SUM(IF(quantidade > 0, quantidade, 0)) AS quantidade_estoque FROM produtos;
