@@ -76,3 +76,46 @@ SELECT produto, MAX(preco) AS preco_maximo FROM produtos GROUP BY produto;
 SELECT produto, MIN(preco) AS preco_minimo FROM produtos GROUP BY produto;
 
 SELECT SUM(IF(quantidade > 0, quantidade, 0)) AS quantidade_estoque FROM produtos;
+
+--Exercício 7--
+DELIMITER //
+CREATE FUNCTION fatorial(n INT)
+RETURNS INT DETERMINISTIC
+BEGIN
+	DECLARE resultado INT;
+	SET resultado = 1;
+	WHILE n > 1 DO
+		SET resultado = resultado * n;
+	        SET n = n - 1;
+	END WHILE;
+	RETURN resultado;
+END;
+// DELIMITER ;
+
+DELIMITER //
+CREATE FUNCTION exponencial(n INT, e INT)
+RETURNS INT DETERMINISTIC
+BEGIN
+    DECLARE resultado INT;
+    SET resultado = n;
+    WHILE e > 1 DO
+        SET resultado = resultado * n;
+        SET e = e - 1;
+    END WHILE;
+    RETURN resultado;
+END;
+// DELIMITER ;
+
+DELIMITER //
+CREATE FUNCTION palindromo(p VARCHAR(255))
+RETURNS INT DETERMINISTIC
+BEGIN
+	DECLARE inverso VARCHAR(255);
+    	SELECT REVERSE(p) INTO invertida;
+    	IF p = invertida THEN
+		RETURN 1;
+	ELSE
+		RETURN 0;
+	END IF;
+END;
+// DELIMITER ;
