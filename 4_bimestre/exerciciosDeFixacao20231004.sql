@@ -143,3 +143,42 @@ BEGIN
 END;
 //
 DELIMITER ;
+
+--Exercício 5--
+DELIMITER //
+CREATE FUNCTION autores_sem_livros()
+RETURNS TEXT DETERMINISTIC
+BEGIN
+    DECLARE fim INT;
+    DECLARE id_autor INT;
+    DECLARE primeiro_nome VARCHAR(255);
+    DECLARE ultimo_nome VARCHAR(255);
+    DECLARE lista_autores TEXT;
+    SET lista_autores = '';
+
+    DECLARE cursor_autores CURSOR FOR
+        SELECT id, primeiro_nome, ultimo_nome FROM Autor;
+
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET fim = 0;
+
+    OPEN cursor_autores;
+
+    autores_loop: LOOP
+        FETCH cursor_autores INTO id_autor, primeiro_nome, ultimo_nome;
+
+        IF fim = 0 THEN
+            LEAVE autores_loop;
+        END IF;
+
+		IF lista_autores = '' THEN
+			SET lista_autores = CONCAT(primeiro_nome, ' ', ultimo_nome);
+		ELSE
+			SET lista_autores = CONCAT(lista_autores, ', ', CONCAT(primeiro_nome, ' ', ultimo_nome));
+		END IF;
+    END LOOP autores_loop;
+
+    CLOSE cursor_autores;
+
+    RETURN lista_autores;
+END//
+DELIMITER ;
