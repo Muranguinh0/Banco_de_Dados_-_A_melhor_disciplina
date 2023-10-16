@@ -104,3 +104,42 @@ BEGIN
 END;
 //
 DELIMITER ;
+
+--Exercício 4--
+DELIMITER //
+CREATE FUNCTION media_livros_por_editora()
+RETURNS DECIMAL(12,5)
+DETERMINISTIC
+BEGIN
+    DECLARE fim INT;
+    DECLARE a_livro INT;
+    DECLARE a_editora INT;
+    DECLARE media_livros_por_editora DECIMAL(12,5);
+    SET a_livro = 0;
+    SET a_editora = 0;
+    SET media_livros_por_editora = 0;
+    DECLARE cursor_editora CURSOR FOR SELECT id FROM Editora;
+    
+	DECLARE cursor_livro CURSOR FOR SELECT COUNT(*) FROM Livro WHERE id_editora = a_editora;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET fim = 0;
+    
+    OPEN cursor_editora;
+    editora_loop: LOOP
+        FETCH cursor_editora INTO a_editora;
+        IF fim = 0 THEN
+            LEAVE editora_loop;
+        END IF;
+        
+        OPEN cursor_livro;
+			FETCH cursor_livro INTO a_livro;
+        CLOSE cursor_livro;
+        
+        SET media_livros_por_editora = media_livros_por_editora + (a_livro / (SELECT COUNT(*) FROM Editora));
+    END LOOP editora_loop;
+    
+    CLOSE cursor_editora;
+    
+    RETURN media_livros_por_editora;
+END;
+//
+DELIMITER ;
