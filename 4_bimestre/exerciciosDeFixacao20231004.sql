@@ -33,3 +33,42 @@ BEGIN
 END;
 //
 DELIMITER ;
+
+--Exercício 2--
+DELIMITER //
+CREATE FUNCTION listar_livros_por_autor(primeiro_nome_autor VARCHAR(255), ultimo_nome_autor VARCHAR(255)) RETURNS TEXT DETERMINISTIC
+BEGIN
+    DECLARE fim INT;
+    DECLARE x_titulo_livro TEXT;
+    DECLARE lista_titulos TEXT DEFAULT '';
+    
+    DECLARE cursor_livros_autor CURSOR FOR 
+    SELECT livro.titulo FROM Livro 
+    INNER JOIN Livro_Autor ON Livro.id = Livro_Autor.id_livro 
+    INNER JOIN Autor ON Livro_Autor.id_autor = Autor.id 
+    WHERE Autor.primeiro_nome = primeiro_nome_autor AND Autor.ultimo_nome = ultimo_nome_autor;
+
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET fim = 0;
+
+    OPEN cursor_livros_autor;
+
+    livros_loop: LOOP
+        FETCH cursor_livros_autor INTO x_titulo_livro;
+
+        IF fim = 0 THEN
+            LEAVE livros_loop;
+        END IF;
+
+        IF lista_titulos <> '' THEN
+            SET lista_titulos = CONCAT(lista_titulos, ', ', x_titulo_livro);
+        ELSE
+            SET lista_titulos = x_titulo_livro;
+        END IF;
+    END LOOP livros_loop;
+
+    CLOSE cursor_livros_autor;
+
+    RETURN lista_titulos;
+END;
+//
+DELIMITER ;
