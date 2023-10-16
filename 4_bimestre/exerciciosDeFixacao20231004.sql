@@ -72,3 +72,35 @@ BEGIN
 END;
 //
 DELIMITER ;
+
+--Exercício 3--
+DELIMITER //
+CREATE FUNCTION atualizar_resumos() RETURNS TEXT DETERMINISTIC
+BEGIN
+    DECLARE fim INT;
+    DECLARE a_id INT;
+    DECLARE a_resumo TEXT;
+    
+    DECLARE cursor_livros CURSOR FOR SELECT id, resumo FROM Livro;
+        
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET fim = 0;
+    
+    OPEN cursor_livros;
+    
+    livros_loop: LOOP
+        FETCH cursor_livros INTO a_id, a_resumo;
+        
+        IF fim = 0 THEN
+            LEAVE livros_loop;
+        END IF;
+        
+        SET a_resumo = CONCAT(a_resumo, ' Este é um excelente livro!');
+        
+        UPDATE Livro SET resumo = a_resumo WHERE id = a_id;
+    END LOOP livros_loop;
+    
+    CLOSE cursor_livros;
+    RETURN 'Miau';
+END;
+//
+DELIMITER ;
