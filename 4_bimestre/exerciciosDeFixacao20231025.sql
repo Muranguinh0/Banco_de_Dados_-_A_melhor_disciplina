@@ -23,3 +23,16 @@ CREATE TRIGGER exercicio4
 	END IF;
 //
 DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER exercicio5
+	BEFORE INSERT ON Pedidos
+    	FOR EACH ROW
+    	UPDATE Produtos SET estoque = estoque - new.quantidade WHERE id = new.produto_id;
+    	DECLARE v_estoque INT;
+    	SET v_estoque = (SELECT estoque FROM Produtos WHERE id = NEW.produto_id);
+    	IF v_estoque < 5 THEN
+		INSERT INTO Auditoria (mensagem) VALUES ('miau')
+	END IF;
+//
+DELIMITER ;
